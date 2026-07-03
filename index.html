@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReuniteHub | Lost & Found Community</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+       
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">Reunite<span>Hub</span></a>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#" id="reportLink">Report</a>
+            <a href="#" id="browseLink">Browse</a>
+            <a href="index1.html">Contact</a>
+            <a href="signup.html" style="color: #27ae60;">Login/Signup</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Reuniting Lost Items with Their Owners</h1>
+        <p>Join our community to report lost items or help reunite found belongings</p>
+        <div class="search-bar">
+            <input type="text" class="search-input" id="mainSearch" placeholder="Search for lost items...">
+            <button class="search-btn" id="mainSearchBtn"><i class="fas fa-search"></i> Search</button>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="steps">
+        <div class="section-title">
+            <h2>How It Works</h2>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card">
+                <i class="fas fa-bullhorn step-icon"></i>
+                <h3>1. Report</h3>
+                <p>Report a lost or found item with details and photos</p>
+            </div>
+            <div class="step-card">
+                <i class="fas fa-search step-icon"></i>
+                <h3>2. Browse</h3>
+                <p>Search through our database of lost and found items</p>
+            </div>
+            <div class="step-card">
+                <i class="fas fa-handshake step-icon"></i>
+                <h3>3. Connect</h3>
+                <p>Get connected with the owner or finder through our secure system</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Items -->
+    <section class="recent-items" id="recentItems">
+        <div class="section-title">
+            <h2>Recently Added Items</h2>
+        </div>
+        <div class="items-grid" id="itemsGrid">
+            <!-- Items will be dynamically added here -->
+        </div>
+    </section>
+
+    <!-- Search Results -->
+    <section class="search-results" id="searchResults" style="display: none;">
+        <div class="section-title">
+            <h2>Search Results</h2>
+        </div>
+        <div class="items-grid" id="searchResultsGrid">
+            <!-- Search results will be dynamically added here -->
+        </div>
+        <div class="no-results" id="noResults" style="display: none;">
+            <h3>No items found matching your search</h3>
+            <p>Try different keywords or report a new item</p>
+        </div>
+    </section>
+
+    <!-- Report Modal -->
+    <div class="modal" id="reportModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeReportModal">&times;</span>
+            <h2>Report Lost or Found Item</h2>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="lost">I Lost Something</button>
+                <button class="tab-btn" data-tab="found">I Found Something</button>
+            </div>
+            
+            <div class="tab-content active" id="lost-tab">
+                <form id="lostForm">
+                    <div class="form-group">
+                        <label for="lostItemName">Item Name *</label>
+                        <input type="text" id="lostItemName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lostCategory">Category *</label>
+                        <select id="lostCategory" required>
+                            <option value="">Select a category</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="jewelry">Jewelry</option>
+                            <option value="documents">Documents</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="keys">Keys</option>
+                            <option value="wallet">Wallet/Purse</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="lostLocation">Location Lost *</label>
+                        <input type="text" id="lostLocation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lostDate">Date Lost *</label>
+                        <input type="date" id="lostDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lostDescription">Description *</label>
+                        <textarea id="lostDescription" required></textarea>
+                    </div>
+                    
+                    <!-- Image Upload Section for Lost Items -->
+                    <div class="form-group">
+                        <label>Upload Item Photo *</label>
+                        <div class="image-upload-container" id="lostImageUploadContainer" onclick="document.getElementById('lostImageInput').click()">
+                            <input type="file" id="lostImageInput" class="image-upload-input" accept="image/*" required>
+                            <div class="upload-content" id="lostUploadContent">
+                                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                <p class="upload-text">Click to upload or drag and drop</p>
+                                <p class="upload-text" style="font-size: 0.8rem; margin-top: 0.5rem;">Supported formats: JPG, PNG, GIF</p>
+                            </div>
+                            <img id="lostImagePreview" class="upload-preview" alt="Preview">
+                            <button type="button" class="change-image-btn" id="lostChangeImageBtn" onclick="changeImage('lost')">Change Image</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lostContact">Your Contact Information *</label>
+                        <input type="text" id="lostContact" placeholder="Email or phone number" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Report Lost Item</button>
+                </form>
+            </div>
+            
+            <div class="tab-content" id="found-tab">
+                <form id="foundForm">
+                    <div class="form-group">
+                        <label for="foundItemName">Item Name *</label>
+                        <input type="text" id="foundItemName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="foundCategory">Category *</label>
+                        <select id="foundCategory" required>
+                            <option value="">Select a category</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="jewelry">Jewelry</option>
+                            <option value="documents">Documents</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="keys">Keys</option>
+                            <option value="wallet">Wallet/Purse</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="foundLocation">Location Found *</label>
+                        <input type="text" id="foundLocation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="foundDate">Date Found *</label>
+                        <input type="date" id="foundDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="foundDescription">Description *</label>
+                        <textarea id="foundDescription" required></textarea>
+                    </div>
+
+                    <!-- Image Upload Section for Found Items -->
+                    <div class="form-group">
+                        <label>Upload Item Photo *</label>
+                        <div class="image-upload-container" id="foundImageUploadContainer" onclick="document.getElementById('foundImageInput').click()">
+                            <input type="file" id="foundImageInput" class="image-upload-input" accept="image/*" required>
+                            <div class="upload-content" id="foundUploadContent">
+                                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                <p class="upload-text">Click to upload or drag and drop</p>
+                                <p class="upload-text" style="font-size: 0.8rem; margin-top: 0.5rem;">Supported formats: JPG, PNG, GIF</p>
+                            </div>
+                            <img id="foundImagePreview" class="upload-preview" alt="Preview">
+                            <button type="button" class="change-image-btn" id="foundChangeImageBtn" onclick="changeImage('found')">Change Image</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="foundContact">Your Contact Information *</label>
+                        <input type="text" id="foundContact" placeholder="Email or phone number" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Report Found Item</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Details Modal -->
+    <div class="modal" id="itemModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeItemModal">&times;</span>
+            <div id="itemModalContent">
+                <!-- Item details will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>ReuniteHub</h4>
+                <p>Making communities safer by reuniting lost items with their owners</p>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <p>Email: help@reunitehub.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 ReuniteHub. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="script.js">
+    </script>
+</body>
+</html>
